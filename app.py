@@ -20,9 +20,10 @@ def index():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             
-            # Yahan hum fix ki jagah user ki upload ki gayi image ka path use kar rahe hain
+            # User ki upload ki gayi image ka dynamic URL
             uploaded_image_url = url_for('static', filename=f'uploads/{filename}')
             
+            # Saare views user ke uploaded image par map honge
             generated_views = [
                 {'title': '1. Collar & Brand Tag View', 'url': uploaded_image_url},
                 {'title': '2. Pocket & Button View', 'url': uploaded_image_url},
