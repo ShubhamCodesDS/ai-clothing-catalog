@@ -29,7 +29,7 @@
             <form method="POST">
                 <label for="shirt_choice" style="margin-right: 10px; font-weight: bold;">Select Shirt Line:</label>
                 <select name="shirt_choice" id="shirt_choice">
-                    <option value="blue_stripe" {% if current_shirt == 'blue_stripe' %}selected{% endif %}>Classic Blue Stripe Shirt (Pro Views)</option>
+                    <option value="blue_stripe" {% if current_shirt == 'blue_stripe' %}selected{% endif %}>Classic Blue Stripe Shirt</option>
                     <option value="checked_shirt" {% if current_shirt == 'checked_shirt' %}selected{% endif %}>Checkered Plaid Shirt</option>
                 </select>
                 <button type="submit">Load Catalog</button>
