@@ -43,24 +43,38 @@
     <div class="main-container">
         <div class="card">
             <h2>📤 Upload Your Clothing Photo</h2>
-            <div class="upload-box">
-                <p>Drag & Drop or Click to Upload</p>
-                <p style="font-size: 0.8rem; margin-top: 8px;">JPG, PNG or WEBP</p>
-            </div>
+            <form action="/generate" method="POST" enctype="multipart/form-data">
+                <div class="upload-box" onclick="document.getElementById('fileInput').click();">
+                    <p id="fileNameDisplay">Drag & Drop or Click to Upload</p>
+                    <p style="font-size: 0.8rem; margin-top: 8px; color: var(--text-muted);">JPG, PNG or WEBP</p>
+                    <input type="file" id="fileInput" name="clothing_image" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+                </div>
         </div>
 
         <div class="card">
             <h2>🎛️ Select Product Views</h2>
             <div class="views-grid">
-                <button class="view-btn active">👤 Front View</button>
-                <button class="view-btn active">🧍 Back View</button>
-                <button class="view-btn active">🚶 Side View</button>
-                <button class="view-btn active">🔍 Close Front</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">👤 Front View</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🧍 Back View</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🚶 Side View</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🔍 Close Front</button>
             </div>
             <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Custom Prompt Details (Optional)</label>
-            <textarea placeholder="e.g. Professional studio lighting, neutral grey background..."></textarea>
-            <button class="generate-btn">✨ Generate Product Views</button>
+            <textarea name="prompt" placeholder="e.g. Professional studio lighting, neutral grey background..."></textarea>
+            <button type="submit" class="generate-btn">✨ Generate Product Views</button>
+            </form>
         </div>
     </div>
+
+    <script>
+        function updateFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileNameDisplay').innerText = "Selected: " + input.files[0].name;
+            }
+        }
+        function toggleView(btn) {
+            btn.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
