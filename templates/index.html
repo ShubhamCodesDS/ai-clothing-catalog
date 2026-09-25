@@ -12,9 +12,11 @@
         button { background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         button:hover { background: #2563eb; }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .card { background: #1e293b; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .card { background: #1e293b; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); padding-bottom: 15px; }
         .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card p { padding: 15px; margin: 0; font-size: 14px; font-weight: 600; color: #e2e8f0; }
+        .card p { padding: 10px 15px; margin: 0; font-size: 14px; font-weight: 600; color: #e2e8f0; }
+        .download-btn { display: inline-block; background: #10b981; color: white; padding: 6px 15px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; margin-top: 5px; }
+        .download-btn:hover { background: #059669; }
         @media(max-width: 768px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -32,9 +34,10 @@
         <div class="grid">
             {% for view in views %}
             <div class="card">
-                <!-- Fallback to uploaded image if sample images are missing -->
                 <img src="{{ view.url }}" alt="{{ view.title }}" onerror="this.src='{{ uploaded_image }}'">
                 <p>{{ view.title }}</p>
+                <!-- Download Button for each view -->
+                <a href="{{ view.url }}" class="download-btn" download>Download View</a>
             </div>
             {% endfor %}
         </div>
