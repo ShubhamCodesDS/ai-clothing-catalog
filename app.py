@@ -1,50 +1,43 @@
-from flask import Flask, render_template, request, url_for
+import os
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-
-# Multi-shirt database using your exact GitHub static filenames
-SHIRTS_DATABASE = {
-    'blue_stripe': {
-        'name': 'Classic Blue Stripe Shirt',
-        'views': [
-            {'title': '1. Collar & Brand Tag View', 'url': 'sample_collar.jpg'},
-            {'title': '2. Pocket & Button View', 'url': 'sample_pocket.jpg'},
-            {'title': '3. Fabric Texture Close-up', 'url': 'sample_texture.jpg'},
-            {'title': '4. Model Sitting View', 'url': 'sample_sitting.jpg'},
-            {'title': '5. Model Walking View', 'url': 'sample_walking.jpg'},
-            {'title': '6. Studio Portrait View', 'url': 'sample_portrait.jpg'}
-        ]
-    },
-    'checked_shirt': {
-        'name': 'Checkered Plaid Shirt',
-        'views': [
-            {'title': '1. Collar & Brand Tag View', 'url': 'sample_collar.jpg'},
-            {'title': '2. Pocket & Button View', 'url': 'sample_pocket.jpg'},
-            {'title': '3. Fabric Texture Close-up', 'url': 'sample_texture.jpg'},
-            {'title': '4. Model Sitting View', 'url': 'sample_sitting.jpg'},
-            {'title': '5. Model Walking View', 'url': 'sample_walking.jpg'},
-            {'title': '6. Studio Portrait View', 'url': 'sample_portrait.jpg'}
-        ]
-    }
-}
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    selected_shirt_key = 'blue_stripe'
+    uploaded_image_url = None
+    views = None
     
     if request.method == 'POST':
-        selected_shirt_key = request.form.get('shirt_choice', 'blue_stripe')
-    
-    shirt_data = SHIRTS_DATABASE.get(selected_shirt_key, SHIRTS_DATABASE['blue_stripe'])
-    
-    formatted_views = []
-    for view in shirt_data['views']:
-        formatted_views.append({
-            'title': view['title'],
-            'url': url_for('static', filename=view['url'])
-        })
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
         
-    return render_template('index.html', views=formatted_views, current_shirt=selected_shirt_key)
+        if file:
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            
+            # User ki upload ki gayi shirt ka exact URL
+            uploaded_image_url = url_for('static', filename=f'uploads/{filename}')
+            
+            # Wahi uploaded shirt ab saare 6 views mein dynamically dikhegi
+            views = [
+                {'title': '1. Collar & Brand Tag View', 'url': uploaded_image_url},
+                {'title': '2. Pocket & Button View', 'url': uploaded_image_url},
+                {'title': '3. Fabric Texture Close-up', 'url': uploaded_image_url},
+                {'title': '4. Model Sitting View', 'url': uploaded_image_url},
+                {'title': '5. Model Walking View', 'url': uploaded_image_url},
+                {'title': '6. Studio Portrait View', 'url': uploaded_image_url}
+            ]
+            
+    return render_template('index.html', views=views, uploaded_image=uploaded_image_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
