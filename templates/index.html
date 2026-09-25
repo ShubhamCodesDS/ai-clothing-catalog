@@ -20,24 +20,31 @@
         header { text-align: center; margin-bottom: 40px; }
         h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; background: linear-gradient(to right, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p { color: var(--text-muted); font-size: 1rem; }
-        .main-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1000px; }
+        .main-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1100px; margin-bottom: 40px; }
         .card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .card h2 { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: #e2e8f0; }
         .upload-box { border: 2px dashed var(--border-color); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(255,255,255,0.01); }
         .upload-box:hover { border-color: var(--accent-purple); background: rgba(139, 92, 246, 0.03); }
-        .views-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .view-btn { background: #111827; border: 1px solid var(--border-color); color: var(--text-muted); padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; font-weight: 500; transition: 0.2s; }
+        .views-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .view-btn { background: #111827; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; font-weight: 500; font-size: 0.85rem; transition: 0.2s; }
         .view-btn.active { border-color: var(--accent-purple); color: var(--text-main); background: rgba(139, 92, 246, 0.1); }
-        textarea { width: 100%; background: #111827; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: var(--text-main); resize: none; height: 90px; margin-bottom: 20px; outline: none; }
+        textarea { width: 100%; background: #111827; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: var(--text-main); resize: none; height: 80px; margin-bottom: 20px; outline: none; }
         textarea:focus { border-color: var(--accent-purple); }
         .generate-btn { width: 100%; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 20px var(--accent-glow); transition: 0.3s; }
         .generate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        /* 6 Column Results Section */
+        .results-section { width: 100%; max-width: 1100px; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; margin-top: 20px; }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+        .result-item { background: #111827; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; text-align: center; }
+        .result-item img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .result-item p { padding: 12px; font-size: 0.9rem; font-weight: 500; color: #e2e8f0; }
     </style>
 </head>
 <body>
     <header>
-        <h1>One Clothing Photo. Multiple Product Views.</h1>
-        <p>Create professional e-commerce photography from a single clothing image.</p>
+        <h1>One Clothing Photo. 6 Pro Catalog Views.</h1>
+        <p>Generate professional e-commerce photography and close-up details instantly.</p>
     </header>
 
     <div class="main-container">
@@ -52,19 +59,53 @@
         </div>
 
         <div class="card">
-            <h2>🎛️ Select Product Views</h2>
+            <h2>🎛️ Select 6 Catalog Angles</h2>
             <div class="views-grid">
-                <button type="button" class="view-btn active" onclick="toggleView(this)">👤 Front View</button>
-                <button type="button" class="view-btn active" onclick="toggleView(this)">🧍 Back View</button>
-                <button type="button" class="view-btn active" onclick="toggleView(this)">🚶 Side View</button>
-                <button type="button" class="view-btn active" onclick="toggleView(this)">🔍 Close Front</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🔍 Collar Detail</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">👕 Pocket & Buttons</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">✨ Fabric Texture</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🪑 Sitting Pose</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">🚶 Walking Pose</button>
+                <button type="button" class="view-btn active" onclick="toggleView(this)">👤 Studio Portrait</button>
             </div>
             <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Custom Prompt Details (Optional)</label>
-            <textarea name="prompt" placeholder="e.g. Professional studio lighting, neutral grey background..."></textarea>
-            <button type="submit" class="generate-btn">✨ Generate Product Views</button>
+            <textarea name="prompt" placeholder="e.g. Luxury lifestyle lighting, modern urban background..."></textarea>
+            <button type="submit" class="generate-btn">✨ Generate 6 Catalog Views</button>
             </form>
         </div>
     </div>
+
+    {% if generated_images %}
+    <div class="results-section">
+        <h2>✨ Generated Pro Catalog Results (6 Views)</h2>
+        <div class="results-grid">
+            <div class="result-item">
+                <img src="{{ generated_images.collar }}" alt="Collar Detail">
+                <p>1. Collar & Brand Tag View</p>
+            </div>
+            <div class="result-item">
+                <img src="{{ generated_images.pocket }}" alt="Pocket View">
+                <p>2. Pocket & Button View</p>
+            </div>
+            <div class="result-item">
+                <img src="{{ generated_images.texture }}" alt="Fabric Texture">
+                <p>3. Fabric Texture Close-up</p>
+            </div>
+            <div class="result-item">
+                <img src="{{ generated_images.sitting }}" alt="Sitting Pose">
+                <p>4. Model Sitting View</p>
+            </div>
+            <div class="result-item">
+                <img src="{{ generated_images.walking }}" alt="Walking Pose">
+                <p>5. Model Walking View</p>
+            </div>
+            <div class="result-item">
+                <img src="{{ generated_images.studio }}" alt="Studio Portrait">
+                <p>6. Studio Portrait View</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <script>
         function updateFileName(input) {
