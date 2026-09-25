@@ -20,18 +20,19 @@ def index():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             
-            # Yahan hum 6 professional catalog views ke paths set kar rahe hain
-            # Aap inhe apne static folder ki real images se replace kar sakte hain
+            # Yahan hum fix ki jagah user ki upload ki gayi image ka path use kar rahe hain
+            uploaded_image_url = url_for('static', filename=f'uploads/{filename}')
+            
             generated_views = [
-                {'title': '1. Collar & Brand Tag View', 'url': url_for('static', filename='sample_collar.jpg')},
-                {'title': '2. Pocket & Button View', 'url': url_for('static', filename='sample_pocket.jpg')},
-                {'title': '3. Fabric Texture Close-up', 'url': url_for('static', filename='sample_texture.jpg')},
-                {'title': '4. Model Sitting View', 'url': url_for('static', filename='sample_sitting.jpg')},
-                {'title': '5. Model Walking View', 'url': url_for('static', filename='sample_walking.jpg')},
-                {'title': '6. Studio Portrait View', 'url': url_for('static', filename='sample_portrait.jpg')}
+                {'title': '1. Collar & Brand Tag View', 'url': uploaded_image_url},
+                {'title': '2. Pocket & Button View', 'url': uploaded_image_url},
+                {'title': '3. Fabric Texture Close-up', 'url': uploaded_image_url},
+                {'title': '4. Model Sitting View', 'url': uploaded_image_url},
+                {'title': '5. Model Walking View', 'url': uploaded_image_url},
+                {'title': '6. Studio Portrait View', 'url': uploaded_image_url}
             ]
             
-            return render_template('index.html', views=generated_views, uploaded_image=url_for('static', filename=f'uploads/{filename}'))
+            return render_template('index.html', views=generated_views, uploaded_image=uploaded_image_url)
             
     return render_template('index.html', views=None)
 
