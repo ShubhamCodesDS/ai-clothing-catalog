@@ -1,30 +1,29 @@
-import os
 from flask import Flask, render_template, request, url_for
 
 app = Flask(__name__)
 
-# Multiple shirts database with their professional high-end views mapped properly
+# Multi-shirt database using your exact GitHub static filenames
 SHIRTS_DATABASE = {
     'blue_stripe': {
         'name': 'Classic Blue Stripe Shirt',
         'views': [
-            {'title': '1. Collar & Brand Tag View', 'url': 'sample_collar_2.jpg'},
-            {'title': '2. Pocket & Button View', 'url': 'sample_pocket_2.jpg'},
-            {'title': '3. Fabric Texture Close-up', 'url': 'sample_texture_2.jpg'},
-            {'title': '4. Model Sitting View', 'url': 'sample_sitting_2.jpg'},
-            {'title': '5. Model Walking View', 'url': 'sample_walking_2.jpg'},
-            {'title': '6. Studio Portrait View', 'url': 'sample_portrait_2.jpg'}
+            {'title': '1. Collar & Brand Tag View', 'url': 'sample_collar.jpg'},
+            {'title': '2. Pocket & Button View', 'url': 'sample_pocket.jpg'},
+            {'title': '3. Fabric Texture Close-up', 'url': 'sample_texture.jpg'},
+            {'title': '4. Model Sitting View', 'url': 'sample_sitting.jpg'},
+            {'title': '5. Model Walking View', 'url': 'sample_walking.jpg'},
+            {'title': '6. Studio Portrait View', 'url': 'sample_portrait.jpg'}
         ]
     },
     'checked_shirt': {
         'name': 'Checkered Plaid Shirt',
         'views': [
-            {'title': '1. Collar & Brand Tag View', 'url': '2.png'},
-            {'title': '2. Pocket & Button View', 'url': '2.png'},
-            {'title': '3. Fabric Texture Close-up', 'url': '2.png'},
-            {'title': '4. Model Sitting View', 'url': '2.png'},
-            {'title': '5. Model Walking View', 'url': '2.png'},
-            {'title': '6. Studio Portrait View', 'url': '2.png'}
+            {'title': '1. Collar & Brand Tag View', 'url': 'sample_collar.jpg'},
+            {'title': '2. Pocket & Button View', 'url': 'sample_pocket.jpg'},
+            {'title': '3. Fabric Texture Close-up', 'url': 'sample_texture.jpg'},
+            {'title': '4. Model Sitting View', 'url': 'sample_sitting.jpg'},
+            {'title': '5. Model Walking View', 'url': 'sample_walking.jpg'},
+            {'title': '6. Studio Portrait View', 'url': 'sample_portrait.jpg'}
         ]
     }
 }
