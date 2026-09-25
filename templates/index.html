@@ -34,9 +34,9 @@
         <div class="grid">
             {% for view in views %}
             <div class="card">
-                <img src="{{ view.url }}" alt="{{ view.title }}" onerror="this.src='{{ uploaded_image }}'">
+                <!-- Bina kisi purane fallback ke direct dynamic image load hogi -->
+                <img src="{{ view.url }}" alt="{{ view.title }}">
                 <p>{{ view.title }}</p>
-                <!-- Download Button for each view -->
                 <a href="{{ view.url }}" class="download-btn" download>Download View</a>
             </div>
             {% endfor %}
